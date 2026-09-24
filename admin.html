@@ -22,8 +22,8 @@
         <thead>
             <tr>
                 <th>Student Name</th>
+                <th>Register Number</th>
                 <th>Feedback</th>
-                <th>Submitted Time</th>
             </tr>
         </thead>
         <tbody id="tableBody">
@@ -46,14 +46,13 @@ function loadData() {
     data.forEach(item => {
         let row = `<tr>
             <td>${item.name}</td>
+            <td>${item.reg}</td>
             <td>${item.fb}</td>
-            <td>${item.time}</td>
         </tr>`;
         tableBody.innerHTML += row;
     });
 }
 
-// Auto load data on page open
 window.onload = loadData;
 </script>
 
