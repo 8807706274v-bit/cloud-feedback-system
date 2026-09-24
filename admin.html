@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <style>
+        body { font-family: Arial; padding: 30px; background-color: #f4f4f9; text-align: center; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #007bff; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Admin Dashboard - Student Feedbacks</h2>
+    <a class="back-btn" href="index.html">← Back to Feedback Form</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Feedback</th>
+                <th>Submitted Time</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Data will load here dynamically -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+function loadData() {
+    let data = JSON.parse(localStorage.getItem("fbs") || "[]");
+    let tableBody = document.getElementById("tableBody");
+    tableBody.innerHTML = ""; 
+
+    if(data.length === 0) {
+        tableBody.innerHTML = "<tr><td colspan='3' style='text-align:center;'>No feedbacks available.</td></tr>";
+        return;
+    }
+
+    data.forEach(item => {
+        let row = `<tr>
+            <td>${item.name}</td>
+            <td>${item.fb}</td>
+            <td>${item.time}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+    });
+}
+
+// Auto load data on page open
+window.onload = loadData;
+</script>
+
+</body>
+</html>
