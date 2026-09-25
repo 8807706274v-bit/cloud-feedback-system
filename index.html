@@ -40,20 +40,40 @@ function s(){
         fb: fb
     };
 
-    let data = JSON.parse(localStorage.getItem("fbs") || "[]");
-    data.push(newFeedback);
-    localStorage.setItem("fbs", JSON.stringify(data));
+    const SUPABASE_URL = "https://goxtanujrmtlpbatomiz.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_kH_Sqsq3Y13zAK6Q5LR5Zw_i7QxlYa_"
 
-    document.getElementById("m").innerText = "Submitted Successfully to Cloud!";
-    document.getElementById("n").value = ""; 
-    document.getElementById("r").value = ""; 
+    fetch(SUPABASE_URL + "/rest/v1/feedbacks", {
+    method: "POST",
+    headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+    },
+    body: JSON.stringify(newFeedback)
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error("Submit failed");
+    }
+
+    document.getElementById("m").innerText =
+        "Submitted Successfully!";
+
+    document.getElementById("n").value = "";
+    document.getElementById("r").value = "";
     document.getElementById("f").value = "";
+})
+.catch(error => {
+    console.log(error);
+    document.getElementById("m").innerText =
+        "Submission failed!";
+});
 
-    fetch("https://typicode.com", {
-        method: "POST",
-        body: JSON.stringify(newFeedback),
-        headers: { "Content-type": "application/json; charset=UTF-8" }
-    }).catch(err => console.log("Background cloud log synced"));
+   
+
+   
 }
 </script>
 
